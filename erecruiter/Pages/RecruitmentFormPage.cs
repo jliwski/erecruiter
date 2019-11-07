@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using System; - TODO usunac niepotrzebne
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
 using OpenQA.Selenium;
 using NUnit.Framework;
 using OpenQA.Selenium.Support.UI;
-using System.Windows.Forms;
 
 namespace erecruiter.Pages
 {
@@ -31,6 +30,7 @@ namespace erecruiter.Pages
         string inputTextCityId = "ctl00_DefaultContent_ctl31_tbCity";
         string uploadFileButtonId = "ctl00_DefaultContent_ctl45_fuCv";
         string sendButtonId = "ctl00_DefaultContent_bttnSend";
+        string deleteUploadedCVButtonId = "ctl00_DefaultContent_ctl45_lstUploadedCvFiles_ctl01_bttnDeleteEntry";
 
         public void disableCookieInfo()
         {
@@ -81,6 +81,11 @@ namespace erecruiter.Pages
             driver.FindElement(By.Id(uploadFileButtonId)).SendKeys(filePath);
         }
 
+        public void deleteUploadedCV()
+        {
+            driver.FindElement(By.Id(deleteUploadedCVButtonId)).Click();
+        }
+
         public void sendForm()
         {
             driver.FindElement(By.Id(sendButtonId)).Click();
@@ -99,6 +104,20 @@ namespace erecruiter.Pages
             StringAssert.Contains("Co najmniej jeden plik CV musi być przesłany.", driver.FindElement(By.XPath("//body")).Text);
         }
 
+        public void assertPhoneNoNotFilledAlertAppears()
+        {
+            StringAssert.Contains("Pole \"Telefon\" nie może być puste.", driver.FindElement(By.XPath("//body")).Text);
+        }
+
+        public void assertImproperEmailFormatAlertAppears()
+        {
+            StringAssert.Contains("Format adresu e-mail jest nieprawidłowy.", driver.FindElement(By.XPath("//body")).Text);
+        }
+
+        public void assertAttachmentRequiredAlertAppears()
+        {
+            StringAssert.Contains("Co najmniej jeden plik CV musi być przesłany.", driver.FindElement(By.XPath("//body")).Text);
+        }
 
     }
 }
