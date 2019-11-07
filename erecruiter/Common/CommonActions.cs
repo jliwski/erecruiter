@@ -1,11 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-using OpenQA.Selenium;
-//using NUnit.Framework;
+﻿using OpenQA.Selenium;
 
 namespace erecruiter.Common
 {
@@ -24,9 +17,6 @@ namespace erecruiter.Common
             driver.Url = url;
             driver.Manage().Window.Maximize();
         }
-
-
-
 
 }
 }

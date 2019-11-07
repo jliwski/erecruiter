@@ -1,16 +1,12 @@
 ﻿using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
 
 using NUnit.Framework;
 using OpenQA.Selenium;
-//using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 
 using erecruiter.Pages;
 using erecruiter.Common;
+using System.IO;
 
 namespace erecruiter.Tests
 {
@@ -18,11 +14,13 @@ namespace erecruiter.Tests
     {
 
         public IWebDriver driver;
+        string projectPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);//wskazuje do ..\erecruiter\bin\Debug
 
         [SetUp]
         public void startBrowser()
         {
-            driver = new FirefoxDriver("C:\\Users\\Jan\\Source\\Repos\\jliwski\\erecruiter\\drivers");
+            //driver = new FirefoxDriver("C:\\Users\\Jan\\Source\\Repos\\jliwski\\erecruiter\\drivers");
+            driver = new FirefoxDriver(projectPath);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
@@ -42,7 +40,7 @@ namespace erecruiter.Tests
             applicationFormPage.selectCountry("Polska");
             applicationFormPage.selectRegion("mazowieckie");
             applicationFormPage.inputCity("Warszawa");
-            applicationFormPage.uploadCV("C:\\Users\\Jan\\Source\\Repos\\jliwski\\erecruiter\\external_files\\Test CV.pdf");
+            applicationFormPage.uploadCV(projectPath + "\\Test CV.pdf");
             applicationFormPage.sendForm();
             thankYouPage.assertSuccessfulApplication();
         }
@@ -71,11 +69,11 @@ namespace erecruiter.Tests
             applicationFormPage.sendForm();
             applicationFormPage.assertImproperEmailFormatAlertAppears();
             applicationFormPage.inputEmail("Jan.Testowy@pracuj.pl");
-            applicationFormPage.uploadCV("C:\\Users\\Jan\\Source\\Repos\\jliwski\\erecruiter\\external_files\\Test CV.pdf");
+            applicationFormPage.uploadCV(projectPath + "\\Test CV.pdf");
             applicationFormPage.deleteUploadedCV();
             applicationFormPage.sendForm();
             applicationFormPage.assertAttachmentRequiredAlertAppears();
-            applicationFormPage.uploadCV("C:\\Users\\Jan\\Source\\Repos\\jliwski\\erecruiter\\external_files\\Test CV.pdf");
+            applicationFormPage.uploadCV(projectPath + "\\Test CV.pdf");
             applicationFormPage.sendForm();
             thankYouPage.assertSuccessfulApplication();
         }
